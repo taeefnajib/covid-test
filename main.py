@@ -8,6 +8,8 @@ from torch import nn
 import timm
 from dataclasses_json import dataclass_json
 from dataclasses import dataclass
+import pathlib
+import joblib
 
 
 @dataclass_json
@@ -79,7 +81,8 @@ def get_data(img_size, train_path, batch_size):
         ]
     )
     # creating dataset
-    trainset = datasets.ImageFolder(train_path, transform=train_transform)
+    
+    trainset = datasets.ImageFolder((pathlib.Path(__file__).parent / train_path).resolve(), transform=train_transform)
     # loading data
     trainloader = DataLoader(trainset, batch_size=batch_size, shuffle=True)
     return trainloader
@@ -142,8 +145,7 @@ class PneumoniaTrainer:
         for i in range(epochs):
             model.train()
             avg_train_loss, avg_train_acc = self.train_batch_loop(model, trainloader)
-            # print(f"{i+1}/{epochs}, Loss: {avg_train_loss}, Accuracy: {avg_train_acc}")
-        torch.save(model.state_dict(), "model/model.pt")
+        return model
 
 
 # fitting model

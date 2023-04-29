@@ -151,7 +151,7 @@ class PneumoniaTrainer(nn.Module):
 
 
 # fitting model
-def fit_model(model, trainloader, epochs):
+def fit_model(model, trainloader, epochs, criterion, optimizer):
     trainer = PneumoniaTrainer(criterion, optimizer)
     return trainer.fit(model, trainloader, epochs=epochs)
 
@@ -164,7 +164,7 @@ def run_workflow(hp: Hyperparameters) -> PneumoniaTrainer:
     trainloader = get_data(
         img_size=hp.img_size, train_path=hp.train_path, batch_size=hp.batch_size
     )
-    return fit_model(model, trainloader, hp.epochs)
+    return fit_model(model, trainloader, hp.epochs, criterion, optimizer)
 
 
 if __name__ == "__main__":

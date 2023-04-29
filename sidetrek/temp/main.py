@@ -149,7 +149,7 @@ class PneumoniaTrainer(nn.Module):
 
 
 # fitting model
-def fit_model(model, lr, trainloader, epochs):
+def fit_model(model, trainloader, epochs):
     trainer = PneumoniaTrainer(criterion, optimizer)
     return trainer.fit(model, trainloader, epochs=epochs)
 
@@ -157,11 +157,11 @@ def fit_model(model, lr, trainloader, epochs):
 def run_workflow(hp: Hyperparameters) -> PneumoniaTrainer:
     model = create_model(hp.model_name)
     criterion = nn.CrossEntropyLoss()
-    optimizer = torch.optim.Adam(model.parameters(), lr=lr)
+    optimizer = torch.optim.Adam(model.parameters(), lr=hp.lr)
     trainloader = get_data(
         img_size=hp.img_size, train_path=hp.train_path, batch_size=hp.batch_size
     )
-    return fit_model(model, hp.lr, trainloader, hp.epochs)
+    return fit_model(model, trainloader, hp.epochs)
 
 
 if __name__ == "__main__":

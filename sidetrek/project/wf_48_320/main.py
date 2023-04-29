@@ -51,6 +51,7 @@ hp = Hyperparameters()
 # declaring device
 device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
 
+criterion = nn.CrossEntropyLoss()
 
 # getting model the accuracy
 def accuracy(y_pred, y_true):

@@ -162,7 +162,8 @@ def run_workflow(hp: Hyperparameters) -> PneumoniaTrainer:
     trainloader = get_data(
         img_size=hp.img_size, train_path=hp.train_path, batch_size=hp.batch_size
     )
-    return fit_model(model, trainloader, hp.epochs, criterion, optimizer)
+    trained_model = fit_model(model=model, trainloader=trainloader, epochs=hp.epochs, criterion=criterion, optimizer=optimizer)
+    return trained_model
 
 
 if __name__ == "__main__":
